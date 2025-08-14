@@ -10,10 +10,10 @@ function bodyValidator(body) {
     if (!_body.nombre.trim() || !_body.correo.trim() || !_body.mensaje.trim()) {
       throw new Error("Error con el cuerpo de la solicitud. Los campos nombre, correo o mensaje llegaron vacios");
     }
-
+    _body.code= 'OK'
     return _body
   } catch (error) {
-    const err = {statusCode:400, message: error.message}
+    const err = {statusCode:400, message: error.message, code:'BODY_ERROR'}
 
     return err
   }

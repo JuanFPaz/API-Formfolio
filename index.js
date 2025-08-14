@@ -61,13 +61,15 @@ app.post("/api/jpaz/sendmail", async (req, res) => {
     console.log(`${pc.bgGreen("Message:")} ${pc.green(data.message)}`);
     res.status(200).json(data);
   } catch (error) {
-    const erroMail = {};
-    erroMail.url = req.url;
-    erroMail.timestamp = Date.now();
-    erroMail.message =
+    console.log('El error ocurre aca?');
+    
+    const errorMail = {};
+    errorMail.url = req.url;
+    errorMail.timestamp = Date.now();
+    errorMail.message =
       "Ocurrio un error enviado el correo electronico: " + error.message;
-    erroMail.statusCode = 500;
-    next(erroMail);
+    errorMail.statusCode = 500;
+    next(errorMail);
   }
 });
 

@@ -5,7 +5,7 @@ Content-Type: application/json
     "nombre":"Juan Paz",
     "correo": "juanf.paz94@gmail.com",
     "asunto":"",
-    "mensaje": "  sdasd "
+    "mensaje":"  sdasd "
 }
 
 ###

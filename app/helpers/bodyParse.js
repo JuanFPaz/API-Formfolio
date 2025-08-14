@@ -9,13 +9,13 @@ const bodyParse = (req, res, next) => {
 
   req.on('end', () => {
     try {
-      if (bodyValidator(body).statusCode === 400) {
+      if (bodyValidator(body).code === 'Body_Error') {
         throw bodyValidator(body)
       }
       req.body = bodyValidator(body)
       next();
     } catch (err) {
-      console.log('El error ocurre en el  catch del error?');
+      console.log('El error ocurre en el  catch del body?');
       const error = { 
         url: req.url,
         timestamp: Date.now(),
