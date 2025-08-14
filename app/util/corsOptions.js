@@ -12,6 +12,7 @@ const corsOptions = (ao) => {
         callback(errorCors);
       }
     },
+    method:'POST',
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
   };

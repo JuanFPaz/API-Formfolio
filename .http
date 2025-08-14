@@ -1,4 +1,4 @@
-POST http://localhost:4000/api/jpaz/sendmail
+POST https://api-formfolio.onrender.com/api/jpaz/sendmail
 Content-Type: application/json
 
 {

@@ -2,8 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const bodyParse = require("./app/helpers/bodyParse.js");
-const allowedOrigins = require("./app/helpers/allowerOrigin.js")
-const corsOptions = require("./app/util/corsOptions.js")
+const allowedOrigins = require("./app/helpers/allowerOrigin.js");
+const corsOptions = require("./app/util/corsOptions.js");
 const limiter = require("./app/util/limiter.js");
 const transporter = require("./app/util/transporter.js");
 const pc = require("picocolors");
@@ -18,12 +18,20 @@ app.use(async (req, res, next) => {
     url,
     headers: { origin },
   } = req;
-  console.log(" ");
-  console.log(`${pc.bgCyan("ORIGIN:")} ${pc.green(origin)}`);
-  console.log(`${pc.bgCyan("URL:")} ${pc.green(url)}`);
-  console.log(`${pc.bgCyan("METHOD:")} ${pc.green(method)}`);
-  console.log(`${pc.bgCyan("DATE:")} ${pc.green(new Date().toLocaleString())}`);
-  next();
+  try {
+    console.log(" ");
+    console.log(`${pc.bgCyan("ORIGIN:")} ${pc.green(origin)}`);
+    console.log(`${pc.bgCyan("URL:")} ${pc.green(url)}`);
+    console.log(`${pc.bgCyan("METHOD:")} ${pc.green(method)}`);
+    console.log(
+      `${pc.bgCyan("DATE:")} ${pc.green(new Date().toLocaleString())}`
+    );
+    next();
+  } catch (error) {
+    console.error(error)
+    console.log('Manejando error en primer middleware');
+    next(error)
+  }
 });
 app.use(limiter);
 app.post("/api/jpaz/sendmail", bodyParse);
