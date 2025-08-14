@@ -62,7 +62,7 @@ app.post("/api/jpaz/sendmail", async (req, res) => {
     res.status(200).json(data);
   } catch (error) {
     console.log('El error ocurre aca?');
-    
+    console.error(error)
     const errorMail = {};
     errorMail.url = req.url;
     errorMail.timestamp = Date.now();
