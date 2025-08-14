@@ -1,0 +1,20 @@
+POST http://localhost:4000/api/jpaz/sendmail
+Content-Type: application/json
+
+{
+    "nombre":"Juan Paz",
+    "correo": "juanf.paz94@gmail.com",
+    "asunto":"",
+    "mensaje": "  sdasd "
+}
+
+###
+POST http://localhost:4000/api/
+
+Content-Type: application/json
+
+{
+    "nombre":"Juan Paz",
+    "correo": "juanf.paz94@gmail.com",
+    "asunto":
+}
