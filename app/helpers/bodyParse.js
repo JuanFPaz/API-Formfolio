@@ -15,6 +15,7 @@ const bodyParse = (req, res, next) => {
       req.body = bodyValidator(body)
       next();
     } catch (err) {
+      console.log('El error ocurre en el  catch del error?');
       const error = { 
         url: req.url,
         timestamp: Date.now(),
