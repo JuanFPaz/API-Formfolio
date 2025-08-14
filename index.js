@@ -5,7 +5,7 @@ const bodyParse = require("./app/helpers/bodyParse.js");
 const allowedOrigins = require("./app/helpers/allowerOrigin.js");
 const corsOptions = require("./app/util/corsOptions.js");
 const limiter = require("./app/util/limiter.js");
-const transporter = require("./app/util/transporter.js");
+const mail_rover = require("./app/util/transporter.js");
 const pc = require("picocolors");
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -28,9 +28,9 @@ app.use(async (req, res, next) => {
     );
     next();
   } catch (error) {
-    console.error(error)
-    console.log('Manejando error en primer middleware');
-    next(error)
+    console.error(error);
+    console.log("Manejando error en primer middleware");
+    next(error);
   }
 });
 app.use(limiter);
@@ -50,27 +50,29 @@ app.post("/api/jpaz/sendmail", async (req, res) => {
       Mensaje: ${mensaje}`,
   };
 
-  try {
-    await transporter.sendMail(mailOptions);
-    data.url = req.url;
-    data.timestamp = Date.now();
-    data.message = "Correo enviado correctamente!";
-    data.statusCode = 200;
-    console.log(`${pc.bgGreen("Request Complete")}`);
-    console.log(`${pc.bgGreen("Status Code:")} ${pc.green(data.statusCode)}`);
-    console.log(`${pc.bgGreen("Message:")} ${pc.green(data.message)}`);
-    res.status(200).json(data);
-  } catch (error) {
-    console.log('El error ocurre aca?');
-    console.error(error)
-    const errorMail = {};
-    errorMail.url = req.url;
-    errorMail.timestamp = Date.now();
-    errorMail.message =
-      "Ocurrio un error enviado el correo electronico: " + error.message;
-    errorMail.statusCode = 500;
-    next(errorMail);
-  }
+  mail_rover(async (transporter) => {
+    try {
+      await transporter.sendMail(mailOptions);
+      data.url = req.url;
+      data.timestamp = Date.now();
+      data.message = "Correo enviado correctamente!";
+      data.statusCode = 200;
+      console.log(`${pc.bgGreen("Request Complete")}`);
+      console.log(`${pc.bgGreen("Status Code:")} ${pc.green(data.statusCode)}`);
+      console.log(`${pc.bgGreen("Message:")} ${pc.green(data.message)}`);
+      res.status(200).json(data);
+    } catch (error) {
+      console.log("El error ocurre aca?");
+      console.error(error);
+      const errorMail = {};
+      errorMail.url = req.url;
+      errorMail.timestamp = Date.now();
+      errorMail.message =
+        "Ocurrio un error enviado el correo electronico: " + error.message;
+      errorMail.statusCode = 500;
+      next(errorMail);
+    }
+  });
 });
 
 app.use((req, res, next) => {
